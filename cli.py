@@ -65,6 +65,8 @@ KNOWN_FLAGS = {
     "--special-chars",
     "-sP",
     "--spaces",
+    "-Uc",
+    "--upper-case",
     "-s",
     "--size",
     "-o",
@@ -268,6 +270,12 @@ def main(
     spaces: bool = typer.Option(
         False, "-sP", "--spaces", help="allow spaces inside passwords (off by default)"
     ),
+    uppercase: bool = typer.Option(
+        False,
+        "-Uc",
+        "--upper-case",
+        help="apply uppercase letters (mainly the first char of each word), off by default",
+    ),
     size: str = typer.Option(..., "-s", "--size", help="small|medium|large|N"),
     output_path: str = typer.Option(
         "wordlist.txt", "-o", "--output", help="output file path"
@@ -337,7 +345,7 @@ def main(
     rng = random.Random(seed)
 
     candidates = stream_candidates(
-        tokens, profile, forced_pool, special_present, rng, depth_max=depth
+        tokens, profile, forced_pool, special_present, rng, depth_max=depth, uppercase=uppercase
     )
     debug_path = str(Path(output_path).with_suffix(".debug.jsonl")) if debug else None
     progress, is_tty = _make_progress()

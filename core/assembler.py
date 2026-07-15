@@ -8,6 +8,23 @@ from core.tokenizer import Token
 SUFFIX_POSITIONS = {"suffix_end", "suffix_end_fixed_single"}
 CONNECTOR_POSITIONS = {"connector_between_tokens"}
 DEFAULT_DEPTH_WEIGHTS = {1: 0.2, 2: 0.5, 3: 0.3}
+UPPERCASE_LEADING_WEIGHTS = {0: 0.2, 1: 0.5, 2: 0.22, 3: 0.08}
+
+
+def _capitalize_leading(part: str, rng: random.Random) -> str:
+    lowered = part.lower()
+    counts = list(UPPERCASE_LEADING_WEIGHTS)
+    probabilities = [UPPERCASE_LEADING_WEIGHTS[count] for count in counts]
+    count = rng.choices(counts, weights=probabilities, k=1)[0]
+    if count == 0:
+        return lowered
+    return lowered[:count].upper() + lowered[count:]
+
+
+def _apply_case(parts: List[str], uppercase: bool, rng: random.Random) -> List[str]:
+    if not uppercase:
+        return [part.lower() for part in parts]
+    return [_capitalize_leading(part, rng) for part in parts]
 
 
 def select_mode(personality: Personality, rng: random.Random) -> str:
@@ -70,7 +87,7 @@ def _weighted_sample(tokens: List[Token], weights: List[float], count: int,
 
 def stream_candidates(tokens: List[Token], personality: Personality, forced_pool: List[str],
                       forced_present: bool, rng: random.Random, depth_max: int = 3,
-                      depth_weights: Dict[int, float] = None) -> Iterator[dict]:
+                      depth_weights: Dict[int, float] = None, uppercase: bool = False) -> Iterator[dict]:
     if not tokens:
         return
     depth_weights = depth_weights or DEFAULT_DEPTH_WEIGHTS
@@ -80,7 +97,7 @@ def stream_candidates(tokens: List[Token], personality: Personality, forced_pool
     while True:
         depth = rng.choices(depths, weights=depth_probabilities, k=1)[0]
         selected = _weighted_sample(tokens, weights, depth, rng)
-        parts = [rng.choice(token.variants) for token in selected]
+        parts = _apply_case([rng.choice(token.variants) for token in selected], uppercase, rng)
         mode = select_mode(personality, rng)
         if mode == "paranoid":
             password = _assemble_paranoid(parts, personality, forced_pool, forced_present, rng)
