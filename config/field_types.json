@@ -1,0 +1,109 @@
+{
+  "personal_info": {
+    "name": "proper_name",
+    "last_name": "proper_name",
+    "nickname": "proper_name",
+    "national_id": "structured_number",
+    "country": "place_name",
+    "city": "place_name",
+    "zodiac_sign": "free_text"
+  },
+
+  "birth_data": {
+    "day_of_birth": "date",
+    "month_of_birth": "date",
+    "year_of_birth": "date"
+  },
+
+  "address_data": {
+    "childhood_street": "place_name",
+    "childhood_address_number": "structured_number",
+    "current_street": "place_name",
+    "current_address_number": "structured_number",
+    "neighborhood": "place_name",
+    "postal_code": "structured_number"
+  },
+
+  "education": {
+    "preschool_name": "place_name",
+    "primary_school_name": "place_name",
+    "secondary_school_name": "place_name",
+    "university_name": "place_name",
+    "degree_studied": "free_text",
+    "favorite_subject": "free_text",
+    "favorite_teacher_name": "proper_name"
+  },
+
+  "family_and_relationships": {
+    "mother_name": "proper_name",
+    "father_name": "proper_name",
+    "sibling_names": "proper_name",
+    "grandmother_names": "proper_name",
+    "grandfather_names": "proper_name",
+    "aunt_uncle_names": "proper_name",
+    "cousin_names": "proper_name",
+    "best_friend_name": "proper_name",
+    "partner_name": "proper_name",
+    "ex_partner_name": "proper_name",
+    "children_names": "proper_name",
+    "pet_names": "proper_name",
+    "important_dates": "date"
+  },
+
+  "work_and_career": {
+    "current_company": "place_name",
+    "job_role": "free_text",
+    "first_job": "place_name",
+    "employee_id": "structured_number"
+  },
+
+  "interests_and_fandom": {
+    "favorite_sport": "free_text",
+    "favorite_team": "place_name",
+    "favorite_celebrity": "proper_name",
+    "favorite_saga_or_character": "proper_name",
+    "favorite_movie": "free_text",
+    "favorite_series": "free_text",
+    "favorite_book": "free_text",
+    "favorite_band_or_artist": "proper_name",
+    "favorite_song": "free_text",
+    "favorite_color": "free_text",
+    "favorite_food": "free_text",
+    "favorite_drink": "free_text",
+    "hobby": "free_text",
+    "dream_destination": "place_name",
+    "favorite_vacation_place": "place_name"
+  },
+
+  "tech_and_gaming": {
+    "favorite_videogame": "free_text",
+    "favorite_game_character": "proper_name",
+    "favorite_programming_language": "free_text",
+    "favorite_os": "free_text",
+    "gaming_username": "username_handle",
+    "discord_username": "username_handle",
+    "steam_username": "username_handle",
+    "github_username": "username_handle"
+  },
+
+  "social_media_usernames": {
+    "x_twitter_username": "username_handle",
+    "facebook_meta_username": "username_handle",
+    "instagram_username": "username_handle",
+    "telegram_username": "username_handle",
+    "reddit_username": "username_handle",
+    "snapchat_username": "username_handle",
+    "tiktok_username": "username_handle",
+    "linkedin_username": "username_handle",
+    "whatsapp_number": "structured_number",
+    "email_username": "username_handle"
+  },
+
+  "vehicles_and_numbers": {
+    "car_brand_model": "free_text",
+    "license_plate": "structured_number",
+    "phone_number": "structured_number",
+    "student_id": "structured_number",
+    "lucky_number": "short_number"
+  }
+}

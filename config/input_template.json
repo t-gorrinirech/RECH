@@ -1,0 +1,116 @@
+{
+    "personal_info": {
+        "name": "tomas",
+        "last_name": "gorrini rech",
+        "nickname": "WRITE HERE",
+        "national_id": "WRITE HERE",
+        "country": "WRITE HERE",
+        "city": "WRITE HERE",
+        "zodiac_sign": "WRITE HERE"
+    },
+    "birth_data": {
+        "day_of_birth": "WRITE HERE",
+        "month_of_birth": "WRITE HERE",
+        "year_of_birth": "WRITE HERE"
+    },
+    "address_data": {
+        "childhood_street": "WRITE HERE",
+        "childhood_address_number": "WRITE HERE",
+        "current_street": "WRITE HERE",
+        "current_address_number": "WRITE HERE",
+        "neighborhood": "WRITE HERE",
+        "postal_code": "WRITE HERE"
+    },
+    "education": {
+        "preschool_name": "WRITE HERE",
+        "primary_school_name": "WRITE HERE",
+        "secondary_school_name": "WRITE HERE",
+        "university_name": "WRITE HERE",
+        "degree_studied": "WRITE HERE",
+        "favorite_subject": "WRITE HERE",
+        "favorite_teacher_name": "WRITE HERE"
+    },
+    "family_and_relationships": {
+        "mother_name": "WRITE HERE",
+        "father_name": "WRITE HERE",
+        "sibling_names": [
+            "WRITE HERE"
+        ],
+        "grandmother_names": [
+            "WRITE HERE"
+        ],
+        "grandfather_names": [
+            "WRITE HERE"
+        ],
+        "aunt_uncle_names": [
+            "WRITE HERE"
+        ],
+        "cousin_names": [
+            "WRITE HERE"
+        ],
+        "best_friend_name": "WRITE HERE",
+        "partner_name": "WRITE HERE",
+        "ex_partner_name": "WRITE HERE",
+        "children_names": [
+            "WRITE HERE"
+        ],
+        "pet_names": [
+            "WRITE HERE"
+        ],
+        "important_dates": [
+            "WRITE HERE"
+        ]
+    },
+    "work_and_career": {
+        "current_company": "WRITE HERE",
+        "job_role": "WRITE HERE",
+        "first_job": "WRITE HERE",
+        "employee_id": "WRITE HERE"
+    },
+    "interests_and_fandom": {
+        "favorite_sport": "WRITE HERE",
+        "favorite_team": "WRITE HERE",
+        "favorite_celebrity": "WRITE HERE",
+        "favorite_saga_or_character": "WRITE HERE",
+        "favorite_movie": "WRITE HERE",
+        "favorite_series": "WRITE HERE",
+        "favorite_book": "WRITE HERE",
+        "favorite_band_or_artist": "WRITE HERE",
+        "favorite_song": "WRITE HERE",
+        "favorite_color": "WRITE HERE",
+        "favorite_food": "WRITE HERE",
+        "favorite_drink": "WRITE HERE",
+        "hobby": "WRITE HERE",
+        "dream_destination": "WRITE HERE",
+        "favorite_vacation_place": "WRITE HERE"
+    },
+    "tech_and_gaming": {
+        "favorite_videogame": "WRITE HERE",
+        "favorite_game_character": "WRITE HERE",
+        "favorite_programming_language": "WRITE HERE",
+        "favorite_os": "WRITE HERE",
+        "gaming_username": "WRITE HERE",
+        "discord_username": "WRITE HERE",
+        "steam_username": "WRITE HERE",
+        "github_username": "WRITE HERE"
+    },
+    "social_media_usernames": {
+        "x_twitter_username": "WRITE HERE",
+        "facebook_meta_username": "WRITE HERE",
+        "instagram_username": "WRITE HERE",
+        "telegram_username": "WRITE HERE",
+        "reddit_username": "WRITE HERE",
+        "snapchat_username": "WRITE HERE",
+        "tiktok_username": "WRITE HERE",
+        "linkedin_username": "WRITE HERE",
+        "whatsapp_number": "WRITE HERE",
+        "email_username": "WRITE HERE"
+    },
+    "vehicles_and_numbers": {
+        "car_brand_model": "WRITE HERE",
+        "license_plate": "WRITE HERE",
+        "phone_number": "WRITE HERE",
+        "student_id": "WRITE HERE",
+        "lucky_number": "WRITE HERE"
+    }
+}
