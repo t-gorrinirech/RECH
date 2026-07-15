@@ -1,4 +1,9 @@
-notes/
 .venv/
 .claude/
-
+__pycache__/
+*.pyc
+wordlist.txt
+*.debug.jsonl
+__pycache__
+CLAUDE.md
+output/*.txt
