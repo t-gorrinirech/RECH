@@ -1,0 +1,64 @@
+{
+    "personality_id": "default",
+    "display_name": "No particular characteristic",
+    "priority_mode": "uniform_all_fields",
+    "priority_fields": [],
+    "assembly": {
+        "primary_mode": "human",
+        "mode_leak_probability": 0.05
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.01,
+        "i_l_to_exclamation": 0.01,
+        "s_to_dollar": 0.01,
+        "e_to_asterisk": 0.0
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": "_",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": ".",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "-",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "!",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "@",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "*",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "$",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "?",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "&",
+                "relative_weight": 1.0
+            },
+            {
+                "symbol": "%",
+                "relative_weight": 1.0
+            }
+        ],
+        "probability_of_appearance": 0.07,
+        "position": "suffix_end",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}

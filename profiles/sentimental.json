@@ -1,0 +1,42 @@
+{
+    "personality_id": "sentimental",
+    "display_name": "Sensitive / Affectionate to relatives or pets",
+    "priority_mode": "weighted_list",
+    "priority_fields": [
+        "family_and_relationships.pet_names",
+        "family_and_relationships.mother_name",
+        "family_and_relationships.father_name",
+        "family_and_relationships.sibling_names",
+        "family_and_relationships.grandmother_names",
+        "family_and_relationships.grandfather_names",
+        "family_and_relationships.aunt_uncle_names",
+        "family_and_relationships.cousin_names",
+        "family_and_relationships.best_friend_name",
+        "family_and_relationships.partner_name",
+        "family_and_relationships.important_dates",
+        "address_data.childhood_street",
+        "address_data.childhood_address_number"
+    ],
+    "assembly": {
+        "primary_mode": "human",
+        "mode_leak_probability": 0.05
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.03,
+        "i_l_to_exclamation": 0.03,
+        "s_to_dollar": 0.03,
+        "e_to_asterisk": 0.0
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": ".",
+                "relative_weight": 1.0
+            }
+        ],
+        "probability_of_appearance": 0.12,
+        "position": "suffix_end",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}

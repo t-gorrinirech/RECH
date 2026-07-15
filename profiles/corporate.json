@@ -1,0 +1,42 @@
+{
+    "personality_id": "corporate",
+    "display_name": "Corporate / More formal or professional",
+    "priority_mode": "weighted_list",
+    "priority_fields": [
+        "personal_info.last_name",
+        "work_and_career.job_role",
+        "work_and_career.current_company",
+        "work_and_career.first_job",
+        "education.degree_studied"
+    ],
+    "assembly": {
+        "primary_mode": "human",
+        "mode_leak_probability": 0.05
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.03,
+        "i_l_to_exclamation": 0.03,
+        "s_to_dollar": 0.03,
+        "e_to_asterisk": 0.0
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": ".",
+                "relative_weight": 0.5
+            },
+            {
+                "symbol": "!",
+                "relative_weight": 0.3
+            },
+            {
+                "symbol": "&",
+                "relative_weight": 0.2
+            }
+        ],
+        "probability_of_appearance": 0.35,
+        "position": "suffix_end_fixed_single",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}

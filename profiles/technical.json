@@ -1,0 +1,42 @@
+{
+    "personality_id": "technical",
+    "display_name": "Tech-savvy / Knows their stuff",
+    "priority_mode": "weighted_list",
+    "priority_fields": [
+        "work_and_career.job_role",
+        "interests_and_fandom.hobby",
+        "tech_and_gaming.favorite_videogame",
+        "tech_and_gaming.favorite_programming_language",
+        "tech_and_gaming.favorite_os"
+    ],
+    "assembly": {
+        "primary_mode": "human",
+        "mode_leak_probability": 0.3
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.08,
+        "i_l_to_exclamation": 0.05,
+        "s_to_dollar": 0.08,
+        "e_to_asterisk": 0.0
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": "_",
+                "relative_weight": 0.5
+            },
+            {
+                "symbol": "-",
+                "relative_weight": 0.3
+            },
+            {
+                "symbol": ".",
+                "relative_weight": 0.2
+            }
+        ],
+        "probability_of_appearance": 0.3,
+        "position": "connector_between_tokens",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}

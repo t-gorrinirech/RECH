@@ -1,0 +1,33 @@
+{
+    "personality_id": "fanatic",
+    "display_name": "Loves art or sports / Enthusiast",
+    "priority_mode": "weighted_list",
+    "priority_fields": [
+        "interests_and_fandom.favorite_team",
+        "interests_and_fandom.favorite_sport",
+        "interests_and_fandom.favorite_celebrity",
+        "interests_and_fandom.favorite_saga_or_character"
+    ],
+    "assembly": {
+        "primary_mode": "human",
+        "mode_leak_probability": 0.1
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.1,
+        "i_l_to_exclamation": 0.06,
+        "s_to_dollar": 0.08,
+        "e_to_asterisk": 0.0
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": "_",
+                "relative_weight": 1.0
+            }
+        ],
+        "probability_of_appearance": 0.25,
+        "position": "connector_between_tokens",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}

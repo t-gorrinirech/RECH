@@ -1,0 +1,40 @@
+{
+    "personality_id": "paranoid",
+    "display_name": "Fearful / Extremely cautious",
+    "priority_mode": "uniform_all_fields",
+    "priority_fields": [],
+    "assembly": {
+        "primary_mode": "paranoid",
+        "mode_leak_probability": 0.1
+    },
+    "letter_substitution_probability": {
+        "a_to_at": 0.2,
+        "i_l_to_exclamation": 0.15,
+        "s_to_dollar": 0.18,
+        "e_to_asterisk": 0.1
+    },
+    "connector_symbols": {
+        "symbols": [
+            {
+                "symbol": "!",
+                "relative_weight": 0.25
+            },
+            {
+                "symbol": "@",
+                "relative_weight": 0.25
+            },
+            {
+                "symbol": "*",
+                "relative_weight": 0.25
+            },
+            {
+                "symbol": "$",
+                "relative_weight": 0.25
+            }
+        ],
+        "probability_of_appearance": 0.3,
+        "position": "interleaved",
+        "probability_of_duplicate": 0.0,
+        "forced_only": false
+    }
+}
