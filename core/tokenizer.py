@@ -56,15 +56,31 @@ def _words(value: str) -> List[str]:
     return [word for word in re.split(r"[\s_.\-]+", value) if word]
 
 
+def _name_chunks(word: str, level: str) -> List[str]:
+    if len(word) < 4:
+        return []
+    chunks = []
+    if level in (FULL, LIGHT):
+        chunks.append(word[:4])
+        chunks.append(word[-3:])
+    if level == FULL:
+        chunks.append(word[:3])
+        chunks.append(word[-4:])
+        chunks.append(word.rstrip("aeiou"))
+    return chunks
+
+
 def _proper_name_variants(value: str, level: str) -> List[str]:
     lower = value.lower()
+    words = _words(lower)
     variants = [value, lower, value.capitalize(), value.upper()]
-    if len(lower) >= 4:
+    if len(words) > 1:
+        variants.append("".join(words))
         if level in (FULL, LIGHT):
-            variants.append(lower[:4])
-        if level == FULL:
-            variants.append(lower[:3])
-            variants.append(lower.rstrip("aeiou"))
+            variants.extend(words)
+    targets = words if len(words) > 1 else [lower]
+    for word in targets:
+        variants.extend(_name_chunks(word, level))
     return _dedup(variants)
 
 
@@ -148,8 +164,10 @@ def _date_variants(value: str, level: str) -> List[str]:
         variants = [digits]
         if len(digits) <= 2:
             variants.append(digits.zfill(2))
-        if len(digits) == 4 and level in (FULL, LIGHT):
-            variants.append(digits[-2:])
+        tails = {FULL: (2, 3), LIGHT: (2,), NONE: ()}[level]
+        for tail in tails:
+            if len(digits) > tail:
+                variants.append(digits[-tail:])
         return _dedup(variants)
     return _free_text_variants(value, level)
 
