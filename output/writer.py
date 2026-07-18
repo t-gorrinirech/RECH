@@ -18,14 +18,19 @@ def _has_symbol(text: str) -> bool:
     return any(not char.isalnum() for char in text)
 
 
+def _count_symbols(text: str) -> int:
+    return sum(1 for char in text if not char.isalnum() and not char.isspace())
+
+
 def _has_upper(text: str) -> bool:
     return any(char.isupper() for char in text)
 
 
 def run_generation(candidates: Iterator[dict], size: int, length_range: Tuple[int, int],
-                   output_path: str, debug_path: Optional[str] = None, progress=None) -> dict:
+                   output_path: str, debug_path: Optional[str] = None, progress=None,
+                   symbol_limit: Optional[int] = None) -> dict:
     minimum, maximum = length_range
-    progress_step = max(1, size // 20)
+    progress_step = max(1, size // 50)
     next_mark = progress_step
     last_reported = 0
     seen = set()
@@ -50,6 +55,12 @@ def run_generation(candidates: Iterator[dict], size: int, length_range: Tuple[in
                 break
             password = candidate["password"]
             if not password or not (minimum <= len(password) <= maximum):
+                consecutive_non_new += 1
+                if consecutive_non_new >= _stall_limit(generated):
+                    exhausted = True
+                    break
+                continue
+            if symbol_limit is not None and _count_symbols(password) > symbol_limit:
                 consecutive_non_new += 1
                 if consecutive_non_new >= _stall_limit(generated):
                     exhausted = True

@@ -281,6 +281,18 @@ def main(
         "--upper-case",
         help="apply uppercase letters (mainly the first char of each word), off by default",
     ),
+    num_first: bool = typer.Option(
+        False,
+        "-nf",
+        "--num-first",
+        help="allow numbers to appear at the start of passwords (e.g. 1600tomilanus), off by default",
+    ),
+    limit_characters: Optional[int] = typer.Option(
+        None,
+        "-lc",
+        "--limit-characters",
+        help="max number of special symbols allowed per password (e.g. -lc 2)",
+    ),
     size: str = typer.Option(..., "-s", "--size", help="small|medium|large|N"),
     output_path: str = typer.Option(
         "wordlist.txt", "-o", "--output", help="output file path"
@@ -309,6 +321,8 @@ def main(
     size_value = _parse_size(size)
     range_value = _parse_range(length_range)
     special_present, forced_pool = _resolve_special_chars(special_chars)
+    if limit_characters is not None and limit_characters < 0:
+        raise typer.BadParameter("--limit-characters must be >= 0")
 
     input_file = Path(input_path)
     if not input_file.exists():
@@ -342,6 +356,8 @@ def main(
         allow_relax,
         output_path,
         debug,
+        forced_pool=forced_pool,
+        uppercase=uppercase,
     )
     _emit_warnings(checks.warnings)
     if not checks.ok():

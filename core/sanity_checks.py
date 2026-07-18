@@ -45,6 +45,10 @@ PERSONALITY_REQUIRED_HINTS = {
 
 SUBSTITUTION_HEAVY = {"paranoid", "technical"}
 SUBSTITUTION_LIGHT = {"lazy", "sentimental"}
+UPPERCASE_FACTOR = 2.5
+SLOW_FILL_RATIO = 0.2
+LONG_MIN_LENGTH = 8
+LONG_MIN_PENALTY = 2.0
 
 
 @dataclass
@@ -112,7 +116,7 @@ def _check_flags(
         )
 
 
-def _estimate_space(tokens: List[Token], depth_max: int) -> int:
+def _structural_space(tokens: List[Token], depth_max: int) -> int:
     token_count = len(tokens)
     if token_count == 0:
         return 0
@@ -124,29 +128,73 @@ def _estimate_space(tokens: List[Token], depth_max: int) -> int:
     return total
 
 
+def _mutation_multiplier(
+    personality: Personality,
+    special_chars_present: bool,
+    forced_pool: List[str],
+    uppercase: bool,
+) -> float:
+    multiplier = 1.0
+    if uppercase:
+        multiplier *= UPPERCASE_FACTOR
+    if special_chars_present:
+        pool_size = len(forced_pool) or 1
+        appearance = max(personality.connector.probability_of_appearance, 0.5)
+        multiplier *= 1.0 + appearance * pool_size
+        leet = personality.letter_substitution_probability
+        if leet:
+            multiplier *= 1.0 + sum(float(value) for value in leet.values())
+    return multiplier
+
+
 def _check_feasibility(
-    tokens: List[Token],
+    structural: int,
+    multiplier: float,
+    space: int,
     size: int,
-    depth_max: int,
     allow_relax: bool,
     result: CheckResult,
 ):
-    space = _estimate_space(tokens, depth_max)
-    if size > space:
-        percentage = (space / size * 100) if size else 0.0
-        if allow_relax:
-            result.warnings.append(
-                f"[feasibility] you asked for {size} passwords but only ~{space} unique ones "
-                f"are possible from the filled fields; --allow-relax is on, so personality and "
-                f"symbol restrictions will be loosened to get closer to the target"
-            )
-        else:
-            result.warnings.append(
-                f"[feasibility] you asked for {size} passwords but only ~{space} unique ones "
-                f"are possible from the filled fields (~{percentage:.1f}% of your request); "
-                f"generation will stop early. Fill more input fields, lower --size, "
-                f"or pass --allow-relax"
-            )
+    if size <= space:
+        return
+    percentage = (space / size * 100) if size else 0.0
+    detail = (
+        f"~{structural} distinct data combinations from the filled fields"
+        if multiplier <= 1.0
+        else f"~{structural} data combinations, ~{space} incl. symbol/case/leet mutations"
+    )
+    if allow_relax:
+        result.warnings.append(
+            f"[feasibility] you asked for {size} passwords but only {detail} are reachable; "
+            f"--allow-relax is on, so personality and symbol restrictions will be loosened "
+            f"to get closer to the target"
+        )
+    else:
+        result.warnings.append(
+            f"[feasibility] you asked for {size} passwords but only {detail} are reachable "
+            f"(~{percentage:.1f}% of your request); generation will stop early. "
+            f"Fill more input fields, lower --size, or pass --allow-relax"
+        )
+
+
+def _check_runtime(
+    space: int,
+    size: int,
+    length_range: Tuple[int, int],
+    result: CheckResult,
+):
+    if space <= 0:
+        return
+    minimum, _ = length_range
+    difficulty = size / space
+    if minimum >= LONG_MIN_LENGTH:
+        difficulty *= LONG_MIN_PENALTY
+    if difficulty > SLOW_FILL_RATIO:
+        result.warnings.append(
+            "[runtime] this combination of options (personality, size, range and symbols) "
+            "will likely take longer than usual to generate; "
+            "lower --size, widen --range, or fill more input fields to speed it up"
+        )
 
 
 def _check_output(
@@ -187,10 +235,18 @@ def run_checks(
     allow_relax: bool,
     output_path: Optional[str],
     debug: bool,
+    forced_pool: Optional[List[str]] = None,
+    uppercase: bool = False,
 ) -> CheckResult:
     result = CheckResult()
     _check_completeness(tokens, personality, result)
     _check_flags(personality, special_chars_present, length_range, result)
-    _check_feasibility(tokens, size, depth_max, allow_relax, result)
+    structural = _structural_space(tokens, depth_max)
+    multiplier = _mutation_multiplier(
+        personality, special_chars_present, forced_pool or [], uppercase
+    )
+    space = int(structural * multiplier)
+    _check_feasibility(structural, multiplier, space, size, allow_relax, result)
+    _check_runtime(space, size, length_range, result)
     _check_output(output_path, size, debug, result)
     return result
