@@ -12,9 +12,10 @@ DEFAULT_POOL = ["_", ".", "-", "!", "@", "*", "$", "?", "&", "%"]
 
 
 def _sample(personality_id, sample_input, field_types, forced_pool=None, forced_present=False,
-            uppercase=False):
-    tokens = tokenize(sample_input, field_types, allow_symbols=forced_present)
+            uppercase=False, field_tiers=None):
     profile = load_personality(personality_id)
+    tokens = tokenize(sample_input, field_types, allow_symbols=forced_present,
+                      field_tiers=field_tiers, priority_fields=profile.priority_fields)
     rng = random.Random(SEED)
     stream = stream_candidates(tokens, profile, forced_pool or [], forced_present, rng,
                                depth_max=3, uppercase=uppercase)

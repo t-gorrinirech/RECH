@@ -44,8 +44,9 @@ app = typer.Typer(
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_FIELD_TYPES = ROOT / "config" / "field_types.json"
+DEFAULT_FIELD_TIERS = ROOT / "config" / "field_tiers.json"
 DEFAULT_SYMBOL_POOL = ["_", ".", "-", "!", "@", "*", "$", "?", "&", "%"]
-SIZE_PRESETS = {"small": 100_000, "medium": 500_000, "large": 1_000_000}
+SIZE_PRESETS = {"small": 300_000, "medium": 700_000, "large": 1_000_000}
 
 SC_FLAGS = {"-sc", "--special-chars"}
 SC_SENTINEL = "__RECH_DEFAULT_SC__"
@@ -67,6 +68,10 @@ KNOWN_FLAGS = {
     "--spaces",
     "-Uc",
     "--upper-case",
+    "-nf",
+    "--num-first",
+    "-lc",
+    "--limit-characters",
     "-s",
     "--size",
     "-o",
@@ -312,9 +317,15 @@ def main(
         )
     input_data = _load_json(input_file)
     field_types = _load_json(DEFAULT_FIELD_TYPES)
+    field_tiers = _load_json(DEFAULT_FIELD_TIERS)
     profile = personalities.load_personality(personality)
     tokens = tokenize(
-        input_data, field_types, allow_spaces=spaces, allow_symbols=special_present
+        input_data,
+        field_types,
+        allow_spaces=spaces,
+        allow_symbols=special_present,
+        field_tiers=field_tiers,
+        priority_fields=profile.priority_fields,
     )
 
     if not tokens:
@@ -345,12 +356,20 @@ def main(
     rng = random.Random(seed)
 
     candidates = stream_candidates(
-        tokens, profile, forced_pool, special_present, rng, depth_max=depth, uppercase=uppercase
+        tokens,
+        profile,
+        forced_pool,
+        special_present,
+        rng,
+        depth_max=depth,
+        uppercase=uppercase,
+        num_first=num_first,
     )
     debug_path = str(Path(output_path).with_suffix(".debug.jsonl")) if debug else None
     progress, is_tty = _make_progress()
     metrics = run_generation(
-        candidates, size_value, range_value, output_path, debug_path, progress=progress
+        candidates, size_value, range_value, output_path, debug_path,
+        progress=progress, symbol_limit=limit_characters,
     )
     if is_tty:
         typer.echo("", err=True)

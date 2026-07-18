@@ -36,5 +36,10 @@ def field_types():
 
 
 @pytest.fixture(scope="session")
+def field_tiers():
+    return json.loads((ROOT / "config" / "field_tiers.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="session")
 def sample_input():
     return SAMPLE_INPUT

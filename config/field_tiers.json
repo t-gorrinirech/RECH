@@ -1,0 +1,100 @@
+{
+  "personal_info": {
+    "name": "core",
+    "last_name": "core",
+    "nickname": "core",
+    "national_id": "core",
+    "country": "close",
+    "city": "close",
+    "zodiac_sign": "close"
+  },
+  "birth_data": {
+    "day_of_birth": "core",
+    "month_of_birth": "core",
+    "year_of_birth": "core"
+  },
+  "address_data": {
+    "childhood_street": "close",
+    "childhood_address_number": "close",
+    "current_street": "close",
+    "current_address_number": "close",
+    "neighborhood": "close",
+    "postal_code": "close"
+  },
+  "education": {
+    "preschool_name": "close",
+    "primary_school_name": "close",
+    "secondary_school_name": "close",
+    "university_name": "close",
+    "degree_studied": "close",
+    "favorite_subject": "close",
+    "favorite_teacher_name": "distant"
+  },
+  "family_and_relationships": {
+    "mother_name": "close",
+    "father_name": "close",
+    "sibling_names": "close",
+    "grandmother_names": "distant",
+    "grandfather_names": "distant",
+    "aunt_uncle_names": "distant",
+    "cousin_names": "distant",
+    "best_friend_name": "close",
+    "partner_name": "close",
+    "ex_partner_name": "distant",
+    "children_names": "close",
+    "pet_names": "close",
+    "important_dates": "close"
+  },
+  "work_and_career": {
+    "current_company": "close",
+    "job_role": "close",
+    "first_job": "close",
+    "employee_id": "close"
+  },
+  "interests_and_fandom": {
+    "favorite_sport": "distant",
+    "favorite_team": "distant",
+    "favorite_celebrity": "distant",
+    "favorite_saga_or_character": "distant",
+    "favorite_movie": "distant",
+    "favorite_series": "distant",
+    "favorite_book": "distant",
+    "favorite_band_or_artist": "distant",
+    "favorite_song": "distant",
+    "favorite_color": "distant",
+    "favorite_food": "distant",
+    "favorite_drink": "distant",
+    "hobby": "distant",
+    "dream_destination": "distant",
+    "favorite_vacation_place": "distant"
+  },
+  "tech_and_gaming": {
+    "favorite_videogame": "distant",
+    "favorite_game_character": "distant",
+    "favorite_programming_language": "distant",
+    "favorite_os": "distant",
+    "gaming_username": "close",
+    "discord_username": "close",
+    "steam_username": "close",
+    "github_username": "close"
+  },
+  "social_media_usernames": {
+    "x_twitter_username": "close",
+    "facebook_meta_username": "close",
+    "instagram_username": "close",
+    "telegram_username": "close",
+    "reddit_username": "close",
+    "snapchat_username": "close",
+    "tiktok_username": "close",
+    "linkedin_username": "close",
+    "whatsapp_number": "close",
+    "email_username": "close"
+  },
+  "vehicles_and_numbers": {
+    "car_brand_model": "distant",
+    "license_plate": "distant",
+    "phone_number": "close",
+    "student_id": "close",
+    "lucky_number": "close"
+  }
+}
