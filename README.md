@@ -14,7 +14,7 @@ So the pitch is simple: same input, human-shaped output, tuned to the kind of pe
 
 > For **authorized** pentesting and bug bounty only. You already know this.
 
-## How it works
+## How It Works
 
 Two core settings drive the entire generation.
 
@@ -28,7 +28,7 @@ Nobody is 100% consistent. Every profile has a small margin of randomness, meani
 
 **Personality**, which fields it cares about, how much leet and symbols it uses, and where those symbols land. This part is fully data driven (`profiles/*.json`), nothing is hardcoded.
 
-## The 8 personalities
+## The 8 Personalities
 
 | id (`-p`)     | vibe                                                          | leans on                                                      |
 | ------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -62,7 +62,7 @@ pip install -r requirements.txt
 
 That's it, nothing fancy.
 
-### 2. The input file
+### 2. The Input File
 
 You feed it a JSON with what you know about the target. Start from the template:
 
@@ -126,7 +126,7 @@ python3 RECH.py -p lazy --input in.json -s 50000 -r 8,16 -nf -lc 2 -Uc -sc .,!,@
 python3 RECH.py -p technical --input in.json -s 200000 --depth 4 -sc _,-,. --seed 7
 ```
 
-## Warnings and sanity checks
+## Warnings and Sanity Checks
 
 Before generating, RECH runs a check pass and prints warnings (yellow) or hard errors (red). It flags stuff like:
 
@@ -148,7 +148,7 @@ Everything streams to disk with buffered writes and generator based candidate pr
 
 Pass `--seed <int>` and you get the exact same wordlist every time, as long as the other options are identical. The seed drives every random decision (partial leet, paranoid split point, secondary token choice). Change a flag, change the result. If you don't pass a seed, RECH picks a random one and prints it, so you can reproduce a run after the fact.
 
-## Project layout
+## Project Layout
 
 ```
 RECH.py                 # entrypoint (thin launcher)
@@ -170,10 +170,14 @@ profiles/
 tests/                  # distribution tests (each personality must differ)
 ```
 
-## Running the tests
+## Running The Tests
 
 ```bash
 python3 -m pytest -q
 ```
 
 The suite checks that each personality produces a statistically distinct distribution (symbol %, average length, top tokens). That's the whole point of the tool, so that's what we test.
+
+## License
+
+This is a personal project released under **MIT license**. See [LICENSE](https://github.com/t-gorrinirech/RECH/blob/main/LICENSE) and [DISCLAIMER](https://github.com/t-gorrinirech/RECH/blob/main/DISCLAIMER.md) for more usage info.
