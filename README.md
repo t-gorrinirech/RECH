@@ -47,6 +47,8 @@ List them anytime:
 python3 RECH.py -lp
 ```
 
+![demo](assets/RECH_Showcase.gif)
+
 ## Get Started
 
 ### 1. Installation
