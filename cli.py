@@ -18,7 +18,7 @@ from output.writer import run_generation
 DATA_TEMPLATE_NOTE = (
     "You can find the json data template in the config folder, use it there or copy it "
     "and use it wherever. Note that this script only works with the given data fields, "
-    "so please dont remove or add any"
+    "so please don't remove or add any"
 )
 
 EXAMPLES = "\n\n".join(
@@ -188,11 +188,20 @@ def _metric_row(label: str, value: str, accent=typer.colors.CYAN):
     typer.echo(f"  {marker} {name}  {typer.style(value, bold=True)}", err=True)
 
 
+RELAX_MESSAGE = "It's not stuck, it just needs its time to think..."
+
+
 def _make_progress():
     is_tty = sys.stderr.isatty()
     bar_width = 20
+    relax_line = (
+        "  "
+        + typer.style("Relax:", fg=typer.colors.GREEN, bold=True)
+        + f" {RELAX_MESSAGE}"
+    )
+    state = {"relax_shown": False}
 
-    def progress(done, total):
+    def progress(done, total, relax=False):
         pct = int(done / total * 100) if total else 100
         pct = min(pct, 100)
         if is_tty:
@@ -200,12 +209,23 @@ def _make_progress():
             bar = typer.style("█" * filled, fg=typer.colors.CYAN) + "░" * (
                 bar_width - filled
             )
-            typer.echo(
-                f"\r  generating [{bar}] {pct:3d}%  ({done}/{total})",
-                nl=False,
-                err=True,
-            )
+            bar_line = f"\r\033[K  generating [{bar}] {pct:3d}%  ({done}/{total})"
+            if relax:
+                typer.echo(bar_line, nl=False, err=True)
+                typer.echo(f"\n\033[K{relax_line}\033[A", nl=False, err=True)
+                state["relax_shown"] = True
+            elif state["relax_shown"]:
+                typer.echo(bar_line, nl=False, err=True)
+                typer.echo("\n\033[K\033[A", nl=False, err=True)
+                state["relax_shown"] = False
+            else:
+                typer.echo(bar_line, nl=False, err=True)
         else:
+            if relax and not state["relax_shown"]:
+                typer.echo(relax_line, err=True)
+                state["relax_shown"] = True
+            elif not relax:
+                state["relax_shown"] = False
             typer.echo(f"generating... {pct}% ({done}/{total})", err=True)
 
     return progress, is_tty

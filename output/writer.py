@@ -8,6 +8,9 @@ WRITE_CHUNK = 10000
 STALL_FLOOR = 2000
 STALL_FACTOR = 3
 STALL_CEILING = 2000000
+RELAX_THRESHOLD_SECONDS = 15
+RELAX_CLEAR_STREAK = 5
+SLOW_CHECK_INTERVAL = 20000
 
 
 def _stall_limit(generated: int) -> int:
@@ -42,6 +45,11 @@ def run_generation(candidates: Iterator[dict], size: int, length_range: Tuple[in
     consecutive_non_new = 0
     exhausted = False
     start = time.perf_counter()
+    last_mark_time = start
+    relax_active = False
+    fast_streak = 0
+    current_interval_slow = False
+    loop_index = 0
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     out_file = open(output_path, "w", encoding="utf-8")
@@ -53,6 +61,17 @@ def run_generation(candidates: Iterator[dict], size: int, length_range: Tuple[in
         for candidate in candidates:
             if generated >= size:
                 break
+            loop_index += 1
+            if (
+                progress is not None
+                and loop_index % SLOW_CHECK_INTERVAL == 0
+                and not current_interval_slow
+                and time.perf_counter() - last_mark_time > RELAX_THRESHOLD_SECONDS
+            ):
+                current_interval_slow = True
+                relax_active = True
+                fast_streak = 0
+                progress(generated, size, relax_active)
             password = candidate["password"]
             if not password or not (minimum <= len(password) <= maximum):
                 consecutive_non_new += 1
@@ -76,9 +95,20 @@ def run_generation(candidates: Iterator[dict], size: int, length_range: Tuple[in
             consecutive_non_new = 0
             generated += 1
             if progress is not None and generated >= next_mark:
-                progress(generated, size)
+                now = time.perf_counter()
+                if current_interval_slow or now - last_mark_time > RELAX_THRESHOLD_SECONDS:
+                    relax_active = True
+                    fast_streak = 0
+                elif relax_active:
+                    fast_streak += 1
+                    if fast_streak >= RELAX_CLEAR_STREAK:
+                        relax_active = False
+                        fast_streak = 0
+                progress(generated, size, relax_active)
                 last_reported = generated
                 next_mark += progress_step
+                last_mark_time = now
+                current_interval_slow = False
             buffer.append(password)
             lengths[len(password)] += 1
             token_usage.update(candidate["tokens"])
