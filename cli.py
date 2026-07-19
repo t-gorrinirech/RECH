@@ -39,7 +39,9 @@ EXAMPLES = "\n\n".join(
 )
 
 app = typer.Typer(
-    add_completion=False, help="RECH - Ruthless Exposure of Credential Habits"
+    add_completion=False,
+    help="RECH - Ruthless Exposure of Credential Habits",
+    context_settings={"help_option_names": ["-h", "--help"]},
 )
 
 ROOT = Path(__file__).resolve().parent
@@ -384,8 +386,13 @@ def main(
     debug_path = str(Path(output_path).with_suffix(".debug.jsonl")) if debug else None
     progress, is_tty = _make_progress()
     metrics = run_generation(
-        candidates, size_value, range_value, output_path, debug_path,
-        progress=progress, symbol_limit=limit_characters,
+        candidates,
+        size_value,
+        range_value,
+        output_path,
+        debug_path,
+        progress=progress,
+        symbol_limit=limit_characters,
     )
     if is_tty:
         typer.echo("", err=True)
